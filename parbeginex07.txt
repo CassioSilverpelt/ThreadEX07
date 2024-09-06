@@ -1,0 +1,35 @@
+5 pratos simultaneos
+
+ID ímpar x%2 != 0;
+Sopa de Cebola ~> 0,5 a 0,8s
+
+ID par x%2 == 0;
+Lasanha à Bolonhesa ~> 0,6 a 1,2s
+
+A cada 0,1 seg mostrar o percentual de cozimento (tempo total/0,1 seg (ou 100 milissegundos)
+
+Quando prato fica pronto, deve comunicar ao jogador no console e entregar (0,5s). Só pode entregar um prato por vez.
+
+main:
+for i=0 ~> 5
+	inicializar thread;
+	thread.start(semaphore, i);
+forend
+
+thread:
+	int pedido = i;
+	Semaphore semaforo;
+	run(){
+		cozinhar();
+	}
+
+	cozinhar(){
+		semaforo.acquire();
+		if (tID % 2 == 0) {
+			print: "Pedido nº "+pedido+": Lasanha";
+			tempo = (int) ((Math.random() *301) + 500);
+			print: "Pedido nº "+pedido+"  foi para o fogão";
+		}
+		semaforo.release();
+	}
+
